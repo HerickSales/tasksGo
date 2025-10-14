@@ -1,7 +1,6 @@
 package main
 
 import (
-	"atividade-gerenciamento-tarefas/funcs"
 	"bufio"
 	"fmt"
 	"os"
@@ -12,7 +11,7 @@ import (
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	funcs.ListarOpcoes()
+	ListarOpcoes()
 	for {
 		fmt.Print("\n> ")
 		input, _ := reader.ReadString('\n')
@@ -31,15 +30,15 @@ func main() {
 
 		switch opcao {
 		case 1:
-			funcs.AdicionarTarefa()
+			AdicionarTarefa()
 		case 2:
-			funcs.ListarTarefas()
+			ListarTarefas()
 		case 3:
-			funcs.ConcluirTarefa()
+			ConcluirTarefa()
 		case 4:
-			funcs.RemoverTarefa()
+			RemoverTarefa()
 		case 5:
-			funcs.Sair()
+			Sair()
 			return
 		}
 	}

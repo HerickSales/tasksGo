@@ -1,4 +1,4 @@
-package funcs
+package main
 
 import (
 	"bufio"
@@ -75,12 +75,6 @@ func RemoverTarefa() error {
 	for i, tarefa := range tarefas {
 		if tarefa.Nome == nome {
 			indiceARemover := i
-
-			// Forma simples de remover sem criar um novo slice
-			// parte1 := tarefas[:indiceARemover]
-			// parte2 := tarefas[indiceARemover+1:]
-			// tarefasAtt := append(parte1, parte2...)
-
 			tarefas = append(tarefas[:indiceARemover], tarefas[indiceARemover+1:]...)
 			fmt.Printf("Tarefa '%s' removida com sucesso!\n", nome)
 			return nil
