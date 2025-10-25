@@ -11,7 +11,7 @@ import (
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	ListarOpcoes()
+	// ListarOpcoes()
 	for {
 		fmt.Print("\n> ")
 		input, _ := reader.ReadString('\n')
@@ -28,18 +28,18 @@ func main() {
 			continue
 		}
 
-		switch opcao {
-		case 1:
-			AdicionarTarefa()
-		case 2:
-			ListarTarefas()
-		case 3:
-			ConcluirTarefa()
-		case 4:
-			RemoverTarefa()
-		case 5:
-			Sair()
-			return
-		}
+		// switch opcao {
+		// case 1:
+		// 	AdicionarTarefa()
+		// case 2:
+		// 	ListarTarefas()
+		// case 3:
+		// 	ConcluirTarefa()
+		// case 4:
+		// 	RemoverTarefa()
+		// case 5:
+		// 	Sair()
+		// 	return
+		// }
 	}
 }
