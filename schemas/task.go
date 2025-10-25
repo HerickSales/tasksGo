@@ -10,7 +10,7 @@ type Tarefa struct {
 	gorm.Model
 	Nome       string
 	Concluida  bool
-	Criador    string
+	Criador    Usuario
 	Concluinte Usuario
 }
 
@@ -21,6 +21,6 @@ type TarefaResponse struct {
 	DeletedAt  time.Time `json:"deletedAt,omitempty"`
 	Nome       string    `json:"nome"`
 	Concluida  bool      `json:"concluida"`
-	Criador    string    `json:"criador"`
+	Criador    Usuario   `json:"criador"`
 	Concluinte Usuario   `json:"concluinte"`
 }

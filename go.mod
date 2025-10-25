@@ -1,4 +1,4 @@
-module tasksGo
+module github.com/elipe1/tasksGo-tarefa2
 
 go 1.25.1
 
