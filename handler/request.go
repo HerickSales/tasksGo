@@ -19,8 +19,9 @@ func (r *CreateUserRequest) Validate() error {
 }
 
 type CreateTaskRequest struct {
-	Nome      string `json:"nome"`
-	CriadorID uint   `json:"criadorID"`
+	Nome         string `json:"nome"`
+	CriadorID    uint   `json:"criadorID"`
+	ConcluinteID *uint  `json:"concluinteID,omitempty"`
 }
 
 func (r *CreateTaskRequest) Validate() error {
@@ -34,6 +35,10 @@ func (r *CreateTaskRequest) Validate() error {
 	var user schemas.Usuario
 	if err := db.First(&user, r.CriadorID).Error; err != nil {
 		return fmt.Errorf("user with id %d does not exist", r.CriadorID)
+	}
+
+	if !user.IsAdmin {
+		return fmt.Errorf("user with id %d is not an admin", r.CriadorID)
 	}
 
 	return nil

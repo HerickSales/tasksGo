@@ -18,8 +18,9 @@ func CreateTaskHandler(ctx *gin.Context) {
 	}
 
 	task := schemas.Tarefa{
-		Nome:      request.Nome,
-		CriadorID: request.CriadorID,
+		Nome:         request.Nome,
+		CriadorID:    request.CriadorID,
+		ConcluinteID: request.ConcluinteID,
 	}
 
 	if err := db.Create(&task).Error; err != nil {
@@ -33,4 +34,6 @@ func CreateTaskHandler(ctx *gin.Context) {
 		"message": "task created successfully",
 		"data":    task,
 	})
+
+	// Apenas usuários responsaveis por tarefa x podem conclui-la (Verificação de id na hora de concluir tarefa)
 }
