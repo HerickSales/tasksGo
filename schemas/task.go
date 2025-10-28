@@ -8,10 +8,12 @@ import (
 
 type Tarefa struct {
 	gorm.Model
-	Nome       string
-	Concluida  bool
-	Criador    Usuario
-	Concluinte Usuario
+	Nome         string
+	Concluida    bool
+	CriadorID    uint     `gorm:"index"`
+	Criador      Usuario  `gorm:"foreignKey:CriadorID"`
+	ConcluinteID *uint    `gorm:"index"`
+	Concluinte   *Usuario `gorm:"foreignKey:ConcluinteID"`
 }
 
 type TarefaResponse struct {
@@ -22,5 +24,5 @@ type TarefaResponse struct {
 	Nome       string    `json:"nome"`
 	Concluida  bool      `json:"concluida"`
 	Criador    Usuario   `json:"criador"`
-	Concluinte Usuario   `json:"concluinte"`
+	Concluinte *Usuario  `json:"concluinte,omitempty"`
 }

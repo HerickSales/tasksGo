@@ -10,7 +10,7 @@ type Usuario struct {
 	gorm.Model
 	Nome              string
 	IsAdmin           bool
-	TarefasDesignadas []Tarefa
+	TarefasDesignadas []Tarefa `gorm:"foreignKey:CriadorID"`
 }
 
 type UsuarioResponse struct {

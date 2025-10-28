@@ -7,7 +7,8 @@ import (
 )
 
 type CreateUserRequest struct {
-	Nome string `json:"nome"`
+	Nome    string `json:"nome"`
+	IsAdmin bool   `json:"isAdmin"`
 }
 
 func (r *CreateUserRequest) Validate() error {
@@ -18,17 +19,22 @@ func (r *CreateUserRequest) Validate() error {
 }
 
 type CreateTaskRequest struct {
-	Nome    string          `json:"nome"`
-	Criador schemas.Usuario `json:"criador"`
+	Nome      string `json:"nome"`
+	CriadorID uint   `json:"criadorID"`
 }
 
 func (r *CreateTaskRequest) Validate() error {
 	if r.Nome == "" {
 		return fmt.Errorf("nome is required")
 	}
-	if r.Criador.Nome == "" {
-		return fmt.Errorf("Criador.Nome is required")
+	if r.CriadorID == 0 {
+		return fmt.Errorf("CriadorID is required")
 	}
-	return nil
 
+	var user schemas.Usuario
+	if err := db.First(&user, r.CriadorID).Error; err != nil {
+		return fmt.Errorf("user with id %d does not exist", r.CriadorID)
+	}
+
+	return nil
 }
