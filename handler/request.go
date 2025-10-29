@@ -37,9 +37,35 @@ func (r *CreateTaskRequest) Validate() error {
 		return fmt.Errorf("user with id %d does not exist", r.CriadorID)
 	}
 
+	if r.ConcluinteID != nil {
+		if err := db.First(&user, *r.ConcluinteID).Error; err != nil {
+			return fmt.Errorf("user with id %d does not exist", *r.ConcluinteID)
+		}
+	}
+
 	if !user.IsAdmin {
 		return fmt.Errorf("user with id %d is not an admin", r.CriadorID)
 	}
 
+	// if r.ConcluinteID != &user.ID {
+	// 	return fmt.Errorf("user with id %d is not allowed to end this task", *r.ConcluinteID)
+	// } (MIGRAR ESSA PARTE PARA UPDATE TASK)
+
 	return nil
+}
+
+type UpdateUserRequest struct {
+	Nome    string `json:"nome"`
+	IsAdmin *bool  `json:"isAdmin"`
+}
+
+func (r *UpdateUserRequest) Validate() error {
+	if r.Nome != "" || r.IsAdmin != nil {
+		return nil
+	}
+	return fmt.Errorf("at least one valid field must be provided")
+}
+
+type UpdateTaskRequest struct {
+	// a implementar
 }

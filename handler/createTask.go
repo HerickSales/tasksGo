@@ -34,6 +34,4 @@ func CreateTaskHandler(ctx *gin.Context) {
 		"message": "task created successfully",
 		"data":    task,
 	})
-
-	// Apenas usuários responsaveis por tarefa x podem conclui-la (Verificação de id na hora de concluir tarefa)
 }
