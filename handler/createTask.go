@@ -21,6 +21,7 @@ func CreateTaskHandler(ctx *gin.Context) {
 		Nome:         request.Nome,
 		CriadorID:    request.CriadorID,
 		ConcluinteID: request.ConcluinteID,
+		Concluida: false,
 	}
 
 	if err := db.Create(&task).Error; err != nil {

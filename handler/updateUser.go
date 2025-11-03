@@ -7,7 +7,6 @@ import (
 
 func UpdateUserHandler(ctx *gin.Context) {
 	request := UpdateUserRequest{}
-
 	ctx.BindJSON(&request)
 
 	if err := request.Validate(); err != nil {
@@ -17,10 +16,10 @@ func UpdateUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	id := ctx.Query("id")
+	id := ctx.Param("id")
 	if id == "" {
 		ctx.JSON(400, gin.H{
-			"error": "id query parameter is required",
+			"error": "id parameter is required",
 		})
 		return
 	}
@@ -28,7 +27,7 @@ func UpdateUserHandler(ctx *gin.Context) {
 	user := schemas.Usuario{}
 
 	if err := db.First(&user, id).Error; err != nil {
-		ctx.JSON(400, gin.H{
+		ctx.JSON(404, gin.H{
 			"error": "user not found",
 		})
 		return
@@ -42,14 +41,14 @@ func UpdateUserHandler(ctx *gin.Context) {
 	}
 
 	if err := db.Save(&user).Error; err != nil {
-		ctx.JSON(400, gin.H{
+		ctx.JSON(500, gin.H{
 			"error": "failed updating user",
 		})
 		return
 	}
 
-	ctx.JSON(201, gin.H{
-		"message": "user update successfully",
+	ctx.JSON(200, gin.H{
+		"message": "user updated successfully",
 		"data":    user,
 	})
 }
