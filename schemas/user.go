@@ -9,6 +9,7 @@ import (
 type Usuario struct {
 	gorm.Model
 	Nome              string
+	Senha             string `json:"-"`
 	IsAdmin           bool
 	TarefasDesignadas []Tarefa `gorm:"foreignKey:CriadorID"`
 }

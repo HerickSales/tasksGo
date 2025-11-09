@@ -8,7 +8,13 @@ import (
 
 type CreateUserRequest struct {
 	Nome    string `json:"nome"`
+	Senha   string `json:"senha"`
 	IsAdmin bool   `json:"isAdmin"`
+}
+
+type LoginRequest struct {
+	Nome  string `json:"nome"`
+	Senha string `json:"senha"`
 }
 
 func (r *CreateUserRequest) Validate() error {

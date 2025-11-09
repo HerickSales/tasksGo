@@ -9,8 +9,14 @@ func initializeRoutes(router *gin.Engine) {
 	handler.InitializeHandler()
 
 	router.POST("/user", handler.CreateUserHandler)
-	router.PATCH("/user/:id", handler.UpdateUserHandler)
+	router.POST("/login", handler.LoginHandler)
 
-	router.POST("/task", handler.CreateTaskHandler)
-	router.PATCH("/task/:id", handler.UpdateTaskHandler)
+	protected := router.Group("/")
+	protected.Use(handler.AuthMiddleware())
+	{
+		protected.POST("/task", handler.CreateTaskHandler)
+		// protected.GET("tasks", handler.ListTaskshandler)
+		protected.PATCH("task/:id", handler.UpdateTaskHandler)
+		// protected.DELETE("task/:id", handler.DeleteTaskHandler)
+	}
 }
