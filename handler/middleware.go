@@ -28,6 +28,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			ctx.JSON(401, gin.H{
 				"error": "invalid token",
 			})
+			ctx.Abort()
 			return
 		}
 
