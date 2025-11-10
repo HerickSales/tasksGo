@@ -17,7 +17,7 @@ func initializeRoutes(router *gin.Engine) {
 		protected.POST("/task", handler.CreateTaskHandler)
 		// protected.GET("tasks", handler.ListTasksHandler)
 		protected.PATCH("task/:id", handler.UpdateTaskHandler)
-		// protected.DELETE("task/:id", handler.DeleteTaskHandler)
+		protected.DELETE("task/:id", handler.DeleteTaskHandler)
 
 		protected.PATCH("user/:id", handler.UpdateUserHandler)
 		// protected.GET("users", handler.ListUsersHandler)
