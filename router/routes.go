@@ -20,7 +20,7 @@ func initializeRoutes(router *gin.Engine) {
 		protected.DELETE("task/:id", handler.DeleteTaskHandler)
 
 		protected.PATCH("user/:id", handler.UpdateUserHandler)
-		// protected.GET("users", handler.ListUsersHandler)
+		protected.GET("users", handler.ListUsersHandler)
 		protected.DELETE("user/:id", handler.DeleteUserHandler)
 	}
 }
