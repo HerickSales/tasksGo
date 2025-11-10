@@ -41,6 +41,7 @@ func UpdateTaskHandler(ctx *gin.Context) {
 		task.Concluida = *request.Concluida
 	}
 
+	// Talvez devo remover essa verif abaixo
 	if request.ConcluinteID != nil {
 		task.ConcluinteID = request.ConcluinteID
 	}

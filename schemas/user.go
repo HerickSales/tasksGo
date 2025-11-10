@@ -11,7 +11,7 @@ type Usuario struct {
 	Nome              string
 	Senha             string `json:"-"`
 	IsAdmin           bool
-	TarefasDesignadas []Tarefa `gorm:"foreignKey:CriadorID"`
+	TarefasDesignadas []Tarefa `gorm:"foreignKey:ConcluinteID"`
 }
 
 type UsuarioResponse struct {
