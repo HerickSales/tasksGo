@@ -15,7 +15,7 @@ func initializeRoutes(router *gin.Engine) {
 	protected.Use(handler.AuthMiddleware())
 	{
 		protected.POST("/task", handler.CreateTaskHandler)
-		// protected.GET("tasks", handler.ListTasksHandler)
+		protected.GET("tasks", handler.ListTasksHandler)
 		protected.PATCH("task/:id", handler.UpdateTaskHandler)
 		protected.DELETE("task/:id", handler.DeleteTaskHandler)
 

@@ -17,6 +17,20 @@ func CreateUserHandler(ctx *gin.Context) {
 		return
 	}
 
+	if request.Nome == "" {
+		ctx.JSON(400, gin.H{
+			"error": "name parameter is required",
+		})
+		return
+	}
+
+	if request.Senha == "" {
+		ctx.JSON(400, gin.H{
+			"error": "senha parameter is required",
+		})
+		return
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Senha), bcrypt.DefaultCost)
 	if err != nil {
 		ctx.JSON(500, gin.H{
@@ -29,6 +43,20 @@ func CreateUserHandler(ctx *gin.Context) {
 		Nome:    request.Nome,
 		IsAdmin: request.IsAdmin,
 		Senha:   string(hashedPassword),
+	}
+
+	if request.Nome == "" {
+		ctx.JSON(400, gin.H{
+			"error": "name parameter is required",
+		})
+		return
+	}
+
+	if request.Senha == "" {
+		ctx.JSON(400, gin.H{
+			"error": "senha parameter is required",
+		})
+		return
 	}
 
 	if err := db.Create(&user).Error; err != nil {

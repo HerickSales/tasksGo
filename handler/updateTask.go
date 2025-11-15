@@ -6,6 +6,9 @@ import (
 )
 
 func UpdateTaskHandler(ctx *gin.Context) {
+	userID, _ := ctx.Get("userID")
+	isAdmin, _ := ctx.Get("isAdmin")
+
 	request := UpdateTaskRequest{}
 	ctx.BindJSON(&request)
 
@@ -33,17 +36,39 @@ func UpdateTaskHandler(ctx *gin.Context) {
 		return
 	}
 
-	if request.Nome != "" {
-		task.Nome = request.Nome
+	isTaskOwner := task.ConcluinteID != nil && *task.ConcluinteID == userID.(uint)
+
+	// Se NÃO é admin, NEM responsável pela tarefa
+	if !isAdmin.(bool) && !isTaskOwner {
+		ctx.JSON(403, gin.H{
+			"error": "you don't have permission to update this task",
+		})
+		return
 	}
 
-	if request.Concluida != nil {
-		task.Concluida = *request.Concluida
-	}
+	// Se É o responsável (mas NÃO é admin), só pode marcar como concluída
+	if !isAdmin.(bool) && isTaskOwner {
+		if request.Nome != "" || request.ConcluinteID != nil {
+			ctx.JSON(403, gin.H{
+				"error": "you can only mark this task as completed",
+			})
+			return
+		}
+		if request.Concluida != nil {
+			task.Concluida = *request.Concluida
+		}
+	} else {
+		if request.Nome != "" {
+			task.Nome = request.Nome
+		}
 
-	// Talvez devo remover essa verif abaixo
-	if request.ConcluinteID != nil {
-		task.ConcluinteID = request.ConcluinteID
+		if request.Concluida != nil {
+			task.Concluida = *request.Concluida
+		}
+
+		if request.ConcluinteID != nil {
+			task.ConcluinteID = request.ConcluinteID
+		}
 	}
 
 	if err := db.Save(&task).Error; err != nil {

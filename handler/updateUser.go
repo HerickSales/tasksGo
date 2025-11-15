@@ -6,6 +6,21 @@ import (
 )
 
 func UpdateUserHandler(ctx *gin.Context) {
+	isAdmin, exists := ctx.Get("isAdmin")
+	if !exists {
+		ctx.JSON(401, gin.H{
+			"error": "unauthorized",
+		})
+		return
+	}
+
+	if !isAdmin.(bool) {
+		ctx.JSON(401, gin.H{
+			"error": "only admins can update users",
+		})
+		return
+	}
+
 	request := UpdateUserRequest{}
 	ctx.BindJSON(&request)
 

@@ -6,6 +6,21 @@ import (
 )
 
 func DeleteTaskHandler(ctx *gin.Context) {
+	isAdmin, exists := ctx.Get("isAdmin")
+	if !exists {
+		ctx.JSON(401, gin.H{
+			"error": "unauthorized",
+		})
+		return
+	}
+
+	if !isAdmin.(bool) {
+		ctx.JSON(401, gin.H{
+			"error": "only admins can delete tasks",
+		})
+		return
+	}
+
 	id := ctx.Param("id")
 	if id == "" {
 		ctx.JSON(400, gin.H{

@@ -16,7 +16,7 @@ func ListUsersHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(200, gin.H{
-		"message": "sucess showing users",
+		"message": "success showing users",
 		"data":    users,
 	})
 }

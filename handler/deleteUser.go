@@ -6,6 +6,21 @@ import (
 )
 
 func DeleteUserHandler(ctx *gin.Context) {
+	isAdmin, exists := ctx.Get("isAdmin")
+	if !exists {
+		ctx.JSON(401, gin.H{
+			"error": "unauthorized",
+		})
+		return
+	}
+
+	if !isAdmin.(bool) {
+		ctx.JSON(401, gin.H{
+			"error": "only admins can delete users",
+		})
+		return
+	}
+
 	id := ctx.Param("id")
 	if id == "" {
 		ctx.JSON(400, gin.H{
@@ -50,5 +65,4 @@ func DeleteUserHandler(ctx *gin.Context) {
 	})
 }
 
-// Apenas admin podem deletar todas as contas e usuário deleta apenas a propria (Mesma coisa pra update)
 // Ver ID do criador da tarefa (0)
